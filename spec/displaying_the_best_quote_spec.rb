@@ -18,4 +18,8 @@ describe 'Displaying the best quote' do
 
     it 'displays the loan requested'
   end
+
+  describe 'when the market has insufficient offers from lenders' do
+    it 'states that no quotes could be found'
+  end
 end
