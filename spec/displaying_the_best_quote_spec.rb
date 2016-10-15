@@ -3,5 +3,7 @@ describe 'Displaying the best quote' do
     it 'displays the monthly repayment amount to 2 d.p.'
 
     it 'displays the total replayment amount to 2 d.p.'
+
+    it 'displays the loan rate to 1 d.p.'
   end
 end
