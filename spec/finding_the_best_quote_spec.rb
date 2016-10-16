@@ -18,10 +18,10 @@ describe "Zopa's Lending Market" do
           end
         end
       end
+
+      let(:loan) { 1000 }
       
       it 'returns the loan rate offered to 1 d.p.' do
-        loan = 1000
-        
         best_quote = Zopa::Market.new(
           { 'Lender' => 'Len', 'Rate' => 0.07, 'Available' => 1000 }
         ).best_quote(loan)
@@ -30,8 +30,6 @@ describe "Zopa's Lending Market" do
       end
 
       it 'returns the loan requested' do
-        loan = 1000
-        
         best_quote = Zopa::Market.new(
           { 'Lender' => 'Len', 'Rate' => 0.07, 'Available' => 1000 }
         ).best_quote(loan)
@@ -42,13 +40,12 @@ describe "Zopa's Lending Market" do
       it 'returns the total repayment to 2 d.p.' do
         best_quote = Zopa::Market.new(
           {'Lender' => 'Len', 'Rate' => 0.07, 'Available' => 1000 }
-        ).best_quote(1000)
+        ).best_quote(loan)
         
         expect(best_quote.total_repayment).to eq '£1111.58'
       end
 
       it 'returns the monthly repayment to 2 d.p.' do
-        loan = 1000
         best_quote = Zopa::Market.new(
           {'Lender' => 'Len', 'Rate' => 0.07, 'Available' => 1000 }
         ).best_quote(loan)
