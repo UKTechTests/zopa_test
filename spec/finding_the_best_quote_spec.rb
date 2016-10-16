@@ -132,6 +132,10 @@ describe "Zopa's Lending Market" do
           expect(best_quote.rate).to eq '1.6%'
         end
       end
+
+      context 'but has insufficient quotes with very low rates' do
+        it 'returns only the matching with the lowest rate'
+      end
     end
   end
 end
