@@ -12,6 +12,8 @@ describe "Zopa's Lending Market" do
         end
 
         def best_quote loan
+          return nil if @quote['Available'] != loan
+          
           OpenStruct.new(
             rate: "#{(@quote['Rate'] * 100).round(1)}%",
             requested_amount: "£#{loan}",
@@ -99,6 +101,19 @@ describe "Zopa's Lending Market" do
         best_quote = market.best_quote loan
         
         expect(best_quote.total_repayment).to eq '£1285.65'
+      end
+    end
+
+    context 'when the one quote that is offered is insufficient' do
+      it 'returns no quote' do
+        loan = 1300
+        market = Zopa::Market.new(
+          { 'Lender' => 'Len', 'Rate' => 0.0234, 'Available' => 600 }
+        )
+        
+        best_quote = market.best_quote loan
+        
+        expect(best_quote).to be_nil
       end
     end
   end
