@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'ostruct'
 describe "Zopa's Lending Market" do
   describe 'finding the best quote' do
@@ -9,7 +10,8 @@ describe "Zopa's Lending Market" do
           end
 
           def best_quote loan
-            OpenStruct.new(rate: '7.0%')
+            OpenStruct.new(
+              rate: '7.0%', requested_amount: '£1000')
           end
         end
       end
@@ -24,7 +26,15 @@ describe "Zopa's Lending Market" do
         expect(best_quote.rate).to eq '7.0%'
       end
 
-      it 'returns the loan requested'
+      it 'returns the loan requested' do
+        loan = 1000
+        
+        best_quote = Zopa::Market.new(
+          { 'Lender' => 'Len', 'Rate' => 0.07, 'Available' => 1000 }
+        ).best_quote(loan)
+        
+        expect(best_quote.requested_amount).to eq '£1000'
+      end
 
       it 'returns the total repayment to 2 d.p.'
 
