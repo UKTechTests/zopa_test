@@ -1,14 +1,14 @@
 # coding: utf-8
 describe 'Displaying the best quote' do
-  describe 'when a best quote is found' do
-    def display_best_quote(amount, markets)
-      quote = markets.best_quote amount
-      "Requested amount: #{quote[:requested_amount]}\n" +
-      "Rate: #{quote[:rate]}\n" +
-      "Monthly repayment: #{quote[:monthly_repayment]}\n" +
-        "Total repayment: #{quote[:total_repayment]}"
+   def display_best_quote(amount, markets)
+     quote = markets.best_quote amount
+     "Requested amount: #{quote[:requested_amount]}\n" +
+     "Rate: #{quote[:rate]}\n" +
+     "Monthly repayment: #{quote[:monthly_repayment]}\n" +
+       "Total repayment: #{quote[:total_repayment]}"
     end
 
+  describe 'when a best quote is found' do
     let(:loan) { 1000 }
     let(:markets) { double(:markets_csv) }
     let(:a_best_quote) do
@@ -51,14 +51,6 @@ describe 'Displaying the best quote' do
   end
 
   describe 'when a different best quote is found' do
-    def display_best_quote(loan, markets)
-      quote = markets.best_quote loan
-      "Requested amount: #{quote[:requested_amount]}\n" +
-      "Rate: #{quote[:rate]}\n" +
-      "Monthly repayment: #{quote[:monthly_repayment]}\n" +
-        "Total repayment: #{quote[:total_repayment]}"
-    end
-
     let(:loan) { 1100 }
     let(:markets) { double(:markets_csv) }
     let(:a_best_quote) do
