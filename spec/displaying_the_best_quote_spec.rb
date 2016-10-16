@@ -2,10 +2,11 @@
 describe 'Displaying the best quote' do
   describe 'when a best quote is found' do
     def display_best_quote(amount, markets)
-      "Requested amount: £1000\n" +
-      "Rate: 7.0%\n" +
-      "Monthly repayment: £30.78\n" +
-        "Total repayment: £1108.10"
+      quote = markets.best_quote amount
+      "Requested amount: #{quote[:amount]}\n" +
+      "Rate: #{quote[:rate]}\n" +
+      "Monthly repayment: #{quote[:monthly_repayment]}\n" +
+        "Total repayment: #{quote[:total_repayment]}"
     end
 
     let(:loan) { 1000 }
@@ -51,10 +52,11 @@ describe 'Displaying the best quote' do
 
   describe 'when a different best quote is found' do
     def display_best_quote(loan, markets)
-      "Requested amount: £1100\n" +
-      "Rate: 6.0%\n" +
-      "Monthly repayment: £33.38\n" +
-        'Total repayment: £1201.86'
+      quote = markets.best_quote loan
+      "Requested amount: #{quote[:requested_amount]}\n" +
+      "Rate: #{quote[:rate]}\n" +
+      "Monthly repayment: #{quote[:monthly_repayment]}\n" +
+        "Total repayment: #{quote[:total_repayment]}"
     end
 
     let(:loan) { 1100 }
