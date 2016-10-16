@@ -12,7 +12,8 @@ describe "Zopa's Lending Market" do
           def best_quote loan
             OpenStruct.new(
               rate: '7.0%', requested_amount: '£1000',
-              monthly_repayment: '£30.88'
+              monthly_repayment: '£30.88',
+              total_repayment: '£1111.58'
             )
           end
         end
@@ -38,7 +39,13 @@ describe "Zopa's Lending Market" do
         expect(best_quote.requested_amount).to eq '£1000'
       end
 
-      it 'returns the total repayment to 2 d.p.'
+      it 'returns the total repayment to 2 d.p.' do
+        best_quote = Zopa::Market.new(
+          {'Lender' => 'Len', 'Rate' => 0.07, 'Available' => 1000 }
+        ).best_quote(1000)
+        
+        expect(best_quote.total_repayment).to eq '£1111.58'
+      end
 
       it 'returns the monthly repayment to 2 d.p.' do
         loan = 1000
