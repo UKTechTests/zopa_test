@@ -14,12 +14,12 @@ describe "Zopa's Lending Market" do
         def best_quote loan
           return nil if @quotes.none? { |quote| quote['Available'] == loan }
 
-          lowest = @quotes.min_by { |quote| quote['Rate'] }
+          with_lowest_rate = @quotes.min_by { |quote| quote['Rate'] }
           OpenStruct.new(
-            rate: "#{(lowest['Rate'] * 100).round(1)}%",
+            rate: "#{(with_lowest_rate['Rate'] * 100).round(1)}%",
             requested_amount: "£#{loan}",
-            monthly_repayment: "£#{monthly_payment(lowest).round(2)}",
-            total_repayment: "£#{total_payment(lowest).round(2)}"
+            monthly_repayment: "£#{monthly_payment(with_lowest_rate).round(2)}",
+            total_repayment: "£#{total_payment(with_lowest_rate).round(2)}"
           )
         end
 
