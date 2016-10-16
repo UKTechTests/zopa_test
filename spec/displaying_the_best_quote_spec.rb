@@ -1,5 +1,7 @@
 # coding: utf-8
 describe 'Displaying the best quote' do
+  let(:markets) { double(:markets_csv) }
+  
    def display_best_quote(amount, markets)
      quote = markets.best_quote amount
      "Requested amount: #{quote[:requested_amount]}\n" +
@@ -10,7 +12,7 @@ describe 'Displaying the best quote' do
 
   describe 'when a best quote is found' do
     let(:loan) { 1000 }
-    let(:markets) { double(:markets_csv) }
+
     let(:a_best_quote) do
       {
         monthly_repayment: '£30.78',
@@ -52,7 +54,7 @@ describe 'Displaying the best quote' do
 
   describe 'when a different best quote is found' do
     let(:loan) { 1100 }
-    let(:markets) { double(:markets_csv) }
+
     let(:a_best_quote) do
       {
         requested_amount: '£1100',
