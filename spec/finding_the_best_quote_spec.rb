@@ -4,7 +4,10 @@ describe "Zopa's Lending Market" do
   describe 'finding the best quote' do
     module Zopa
       class Market
+        attr_reader :payment_period
+        
         def initialize quote
+          @payment_period = 36
           @quote = quote
         end
 
@@ -18,14 +21,14 @@ describe "Zopa's Lending Market" do
         end
 
         def total_payment(quote)
-          36 * monthly_payment(quote)
+          payment_period * monthly_payment(quote)
         end
 
         def monthly_payment(quote)
           monthly_interest = quote['Rate']/12
 
           (quote['Available'] * monthly_interest)/
-            (1 - (1 + monthly_interest)**(-36))
+            (1 - (1 + monthly_interest)**(-payment_period))
         end
       end
     end
