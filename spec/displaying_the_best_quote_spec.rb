@@ -51,6 +51,7 @@ describe 'Displaying the best quote' do
 
   describe 'when a different best quote is found' do
     def display_best_quote(loan, markets)
+      "Requested amount: £1100\n" +
       "Rate: 6.0%\n" +
       "Monthly repayment: £33.38\n" +
         'Total repayment: £1201.86'
@@ -60,6 +61,7 @@ describe 'Displaying the best quote' do
     let(:markets) { double(:markets_csv) }
     let(:a_best_quote) do
       {
+        requested_amount: '£1100',
         monthly_repayment: '£33.38',
         total_repayment: '£1201.86',
         rate: '6.0%'
@@ -91,7 +93,11 @@ describe 'Displaying the best quote' do
       expect(best_quote).to include 'Rate: 6.0%'
     end
 
-    it 'displays the loan requested'
+    it 'displays the loan requested' do
+      best_quote = display_best_quote(loan, markets)
+      
+      expect(best_quote).to include 'Requested amount: £1100'
+    end
   end
 
   describe 'when the market has insufficient offers from lenders' do
