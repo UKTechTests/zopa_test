@@ -2,6 +2,7 @@
 describe 'Displaying the best quote' do
   describe 'when a best quote is found' do
     def display_best_quote(amount, markets)
+      "Requested amount: £1000\n" +
       "Rate: 7.0%\n" +
       "Monthly repayment: £30.78\n" +
         "Total repayment: £1108.10"
@@ -40,7 +41,11 @@ describe 'Displaying the best quote' do
       expect(best_quote).to include 'Rate: 7.0%'
     end
 
-    it 'displays the loan requested'
+    it 'displays the loan requested' do
+      best_quote = display_best_quote(loan, markets)
+      
+      expect(best_quote).to include 'Requested amount: £1000'
+    end
   end
 
   describe 'when a different best quote is found' do
