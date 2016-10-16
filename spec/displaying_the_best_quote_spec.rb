@@ -58,11 +58,18 @@ describe 'Displaying the best quote' do
 
     let(:loan) { 1100 }
     let(:markets) { double(:markets_csv) }
+    let(:a_best_quote) do
+      {
+        monthly_repayment: '£33.38',
+        total_repayment: '£1201.86',
+        rate: '6.0%'
+      }
+    end
     
     it 'displays the monthly repayment amount to 2 d.p.' do
       allow(markets).to(
         receive(:best_quote).with(loan).
-        and_return(monthly_repayment: '£33.38')
+        and_return a_best_quote
       )
       
       best_quote = display_best_quote(loan, markets)
@@ -73,7 +80,7 @@ describe 'Displaying the best quote' do
     it 'displays the total replayment amount to 2 d.p.' do
       allow(markets).to(
         receive(:best_quote).with(loan).
-        and_return(total_repayment: '£1201.86')
+        and_return a_best_quote
       )
       
       best_quote = display_best_quote(loan, markets)
@@ -84,7 +91,7 @@ describe 'Displaying the best quote' do
     it 'displays the loan rate to 1 d.p.' do
       allow(markets).to(
         receive(:best_quote).with(loan).
-        and_return(rate: '6.0%')
+        and_return a_best_quote
       )
       
       best_quote = display_best_quote(loan, markets)
