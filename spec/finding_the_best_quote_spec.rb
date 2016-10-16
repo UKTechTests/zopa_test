@@ -53,9 +53,9 @@ describe "Zopa's Lending Market" do
     end
 
     context 'when the market has one different quote' do
+      let(:loan) { 1200 }
+
       it 'returns the loan rate offered to 1 d.p.' do
-        loan = 1200
-        
         best_quote = Zopa::Market.new(
           { 'Lender' => 'Len', 'Rate' => 0.04, 'Available' => 1200 }
         ).best_quote(loan)
@@ -64,8 +64,6 @@ describe "Zopa's Lending Market" do
       end
 
       it 'returns the loan requested' do
-        loan = 1200
-        
         best_quote = Zopa::Market.new(
           { 'Lender' => 'Len', 'Rate' => 0.04, 'Available' => 1200 }
         ).best_quote(loan)
