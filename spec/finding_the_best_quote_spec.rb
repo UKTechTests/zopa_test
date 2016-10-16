@@ -2,23 +2,24 @@
 require 'ostruct'
 describe "Zopa's Lending Market" do
   describe 'finding the best quote' do
-    context 'when the market has only one quote' do
-      module Zopa
-        class Market
-          def initialize quote
+    module Zopa
+      class Market
+        def initialize quote
+          @quote = quote
+        end
 
-          end
-
-          def best_quote loan
-            OpenStruct.new(
-              rate: '7.0%', requested_amount: '£1000',
-              monthly_repayment: '£30.88',
-              total_repayment: '£1111.58'
-            )
-          end
+        def best_quote loan
+          OpenStruct.new(
+            rate: "#{(@quote['Rate'] * 100).round(2)}%",
+            requested_amount: '£1000',
+            monthly_repayment: '£30.88',
+            total_repayment: '£1111.58'
+          )
         end
       end
+    end
 
+    context 'when the market has only one quote' do
       let(:loan) { 1000 }
       let(:market) do
         Zopa::Market.new(
@@ -52,7 +53,15 @@ describe "Zopa's Lending Market" do
     end
 
     context 'when the market has one different quote' do
-      it 'returns the loan rate offered to 1 d.p.'
+      it 'returns the loan rate offered to 1 d.p.' do
+        loan = 1200
+        
+        best_quote = Zopa::Market.new(
+          { 'Lender' => 'Len', 'Rate' => 0.04, 'Available' => 1200 }
+        ).best_quote(loan)
+        
+        expect(best_quote.rate).to eq '4.0%'
+      end
 
       it 'returns the loan requested'
 
