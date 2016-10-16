@@ -1,5 +1,5 @@
-describe 'Zopa Markets' do
-  describe '#best_quote' do
+describe "Zopa's Lending Market" do
+  describe 'finding the best quote' do
     context 'when the market has only one quote' do
       it 'returns the loan rate offered to 1 d.p.'
 
