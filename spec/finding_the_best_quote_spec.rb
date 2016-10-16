@@ -50,5 +50,15 @@ describe "Zopa's Lending Market" do
         expect(best_quote.monthly_repayment).to eq '£30.88'
       end
     end
+
+    context 'when the market has one different quote' do
+      it 'returns the loan rate offered to 1 d.p.'
+
+      it 'returns the loan requested'
+
+      it 'returns the monthly repayment to 2 d.p.'
+
+      it 'returns the total repayment to 2 d.p.'
+    end
   end
 end
