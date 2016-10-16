@@ -4,6 +4,8 @@ describe "Zopa's Lending Market" do
       it 'returns the loan rate offered to 1 d.p.'
 
       it 'returns the loan requested'
+
+      it 'returns the total repayment to 2 d.p.'
     end
   end
 end
