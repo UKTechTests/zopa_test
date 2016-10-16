@@ -13,8 +13,12 @@ describe "Zopa's Lending Market" do
             rate: "#{(@quote['Rate'] * 100).round(2)}%",
             requested_amount: "£#{loan}",
             monthly_repayment: "£#{monthly_payment(@quote).round(2)}",
-            total_repayment: '£1111.58'
+            total_repayment: "£#{total_payment(@quote).round(2)}"
           )
+        end
+
+        def total_payment(quote)
+          36 * monthly_payment(quote)
         end
 
         def monthly_payment(quote)
@@ -85,7 +89,11 @@ describe "Zopa's Lending Market" do
         expect(best_quote.monthly_repayment).to eq '£35.43'
       end
 
-      it 'returns the total repayment to 2 d.p.'
+      it 'returns the total repayment to 2 d.p.' do
+        best_quote = market.best_quote loan
+        
+        expect(best_quote.total_repayment).to eq '£1275.44'
+      end
     end
   end
 end
