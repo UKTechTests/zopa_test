@@ -14,7 +14,8 @@ describe 'Displaying the best quote' do
       {
         monthly_repayment: '£30.78',
         total_repayment: '£1108.10',
-        rate: '7.0%'
+        rate: '7.0%',
+        amount: '£1000'
       }
     end
 
