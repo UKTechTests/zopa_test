@@ -3,7 +3,7 @@ describe 'Displaying the best quote' do
   describe 'when a best quote is found' do
     def display_best_quote(amount, markets)
       quote = markets.best_quote amount
-      "Requested amount: #{quote[:amount]}\n" +
+      "Requested amount: #{quote[:requested_amount]}\n" +
       "Rate: #{quote[:rate]}\n" +
       "Monthly repayment: #{quote[:monthly_repayment]}\n" +
         "Total repayment: #{quote[:total_repayment]}"
@@ -16,7 +16,7 @@ describe 'Displaying the best quote' do
         monthly_repayment: '£30.78',
         total_repayment: '£1108.10',
         rate: '7.0%',
-        amount: '£1000'
+        requested_amount: '£1000'
       }
     end
 
