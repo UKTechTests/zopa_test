@@ -1,4 +1,5 @@
 # coding: utf-8
+require 'ostruct'
 describe 'Displaying the best quote' do
   let(:markets) { double(:markets_csv) }
   
@@ -7,22 +8,22 @@ describe 'Displaying the best quote' do
 
      return 'No quotes could be found at this time.' if quote.none?
      
-     "Requested amount: #{quote[:requested_amount]}\n" +
-     "Rate: #{quote[:rate]}\n" +
-     "Monthly repayment: #{quote[:monthly_repayment]}\n" +
-       "Total repayment: #{quote[:total_repayment]}"
+     "Requested amount: #{quote.requested_amount}\n" +
+     "Rate: #{quote.rate}\n" +
+     "Monthly repayment: #{quote.monthly_repayment}\n" +
+       "Total repayment: #{quote.total_repayment}"
     end
 
   describe 'when a best quote is found' do
     let(:loan) { 1000 }
 
     let(:a_best_quote) do
-      {
+      OpenStruct.new(
         monthly_repayment: '£30.78',
         total_repayment: '£1108.10',
         rate: '7.0%',
         requested_amount: '£1000'
-      }
+      )
     end
 
     before(:each) do
@@ -59,12 +60,12 @@ describe 'Displaying the best quote' do
     let(:loan) { 1100 }
 
     let(:a_best_quote) do
-      {
+      OpenStruct.new(
         requested_amount: '£1100',
         monthly_repayment: '£33.38',
         total_repayment: '£1201.86',
         rate: '6.0%'
-      }
+      )
     end
 
     before(:each) do
