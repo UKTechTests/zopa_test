@@ -17,31 +17,24 @@ describe 'Displaying the best quote' do
       }
     end
 
+    before(:each) do
+      allow(markets).to(
+        receive(:best_quote).with(loan).and_return a_best_quote)
+    end
+
     it 'displays the monthly repayment amount to 2 d.p.' do
-      allow(markets).
-        to(receive(:best_quote).with(loan).
-            and_return a_best_quote)
-      
       best_quote = display_best_quote(loan, markets)
       
       expect(best_quote).to include 'Monthly repayment: £30.78'
     end
 
     it 'displays the total repayment amount to 2 d.p.' do
-      allow(markets).
-        to(receive(:best_quote).with(loan).
-            and_return a_best_quote)
-           
       best_quote = display_best_quote(loan, markets)
       
       expect(best_quote).to include 'Total repayment: £1108.10'
     end
 
     it 'displays the loan rate to 1 d.p.' do
-      allow(markets).to(
-        receive(:best_quote).with(loan).
-        and_return(a_best_quote))
-      
       best_quote = display_best_quote(loan, markets)
       
       expect(best_quote).to include 'Rate: 7.0%'
