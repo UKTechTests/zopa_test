@@ -119,16 +119,18 @@ describe "Zopa's Lending Market" do
     end
 
     context 'when the market has multiple quotes' do
-      it 'returns the quote with the lowest rate' do
-        loan = 1400
+      context 'all of which match the loan requested' do
+        it 'returns the quote with the lowest rate' do
+          loan = 1400
         
-        best_quote = Zopa::Market.new(
-          { 'Lender' => 'A', 'Rate' => 0.156, 'Available' => 1400 },
-          { 'Lender' => 'B', 'Rate' => 0.0156, 'Available' => 1400 },
-          { 'Lender' => 'C', 'Rate' => 0.0234, 'Available' => 1400 }
-        ).best_quote loan
+          best_quote = Zopa::Market.new(
+            { 'Lender' => 'A', 'Rate' => 0.156, 'Available' => 1400 },
+            { 'Lender' => 'B', 'Rate' => 0.0156, 'Available' => 1400 },
+            { 'Lender' => 'C', 'Rate' => 0.0234, 'Available' => 1400 },
+          ).best_quote loan
         
-        expect(best_quote.rate).to eq '1.6%'
+          expect(best_quote.rate).to eq '1.6%'
+        end
       end
     end
   end
