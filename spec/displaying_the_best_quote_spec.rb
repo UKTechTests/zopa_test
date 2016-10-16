@@ -6,7 +6,7 @@ describe 'Displaying the best quote' do
    def display_best_quote(amount, markets)
      quote = markets.best_quote amount
 
-     return 'No quotes could be found at this time.' if quote.none?
+     return 'No quotes could be found at this time.' if quote.nil?
      
      "Requested amount: #{quote.requested_amount}\n" +
      "Rate: #{quote.rate}\n" +
@@ -103,7 +103,7 @@ describe 'Displaying the best quote' do
   describe 'when the market has insufficient offers from lenders' do
     it 'states that no quotes could be found' do
       loan = 1500
-      allow(markets).to receive(:best_quote).with(loan).and_return({})
+      allow(markets).to receive(:best_quote).with(loan).and_return nil
       
       best_quote = display_best_quote(loan, markets)
 
