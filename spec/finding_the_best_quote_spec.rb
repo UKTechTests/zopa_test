@@ -6,19 +6,20 @@ describe "Zopa's Lending Market" do
       class Market
         attr_reader :payment_period
         
-        def initialize quote
+        def initialize *quotes
           @payment_period = 36
-          @quote = quote
+          @quotes = quotes
         end
 
         def best_quote loan
-          return nil if @quote['Available'] != loan
-          
+          return nil if @quotes.none? { |quote| quote['Available'] == loan }
+
+          lowest = @quotes.min_by { |quote| quote['Rate'] }
           OpenStruct.new(
-            rate: "#{(@quote['Rate'] * 100).round(1)}%",
+            rate: "#{(lowest['Rate'] * 100).round(1)}%",
             requested_amount: "£#{loan}",
-            monthly_repayment: "£#{monthly_payment(@quote).round(2)}",
-            total_repayment: "£#{total_payment(@quote).round(2)}"
+            monthly_repayment: "£#{monthly_payment(lowest).round(2)}",
+            total_repayment: "£#{total_payment(lowest).round(2)}"
           )
         end
 
@@ -114,6 +115,20 @@ describe "Zopa's Lending Market" do
         best_quote = market.best_quote loan
         
         expect(best_quote).to be_nil
+      end
+    end
+
+    context 'when the market has multiple quotes' do
+      it 'returns the quote with the lowest rate' do
+        loan = 1400
+        
+        best_quote = Zopa::Market.new(
+          { 'Lender' => 'A', 'Rate' => 0.156, 'Available' => 1400 },
+          { 'Lender' => 'B', 'Rate' => 0.0156, 'Available' => 1400 },
+          { 'Lender' => 'C', 'Rate' => 0.0234, 'Available' => 1400 }
+        ).best_quote loan
+        
+        expect(best_quote.rate).to eq '1.6%'
       end
     end
   end
