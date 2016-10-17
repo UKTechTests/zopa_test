@@ -14,7 +14,11 @@ describe "Zopa's Lending Market" do
         def best_quote loan
           return nil if @quotes.none? { |quote| quote['Available'] == loan }
 
-          with_lowest_rate = @quotes.min_by { |quote| quote['Rate'] }
+          with_lowest_rate = 
+             @quotes.
+               select { |quote| quote['Available'] == loan }.
+               min_by { |quote| quote['Rate'] }
+
           OpenStruct.new(
             rate: "#{(with_lowest_rate['Rate'] * 100).round(1)}%",
             requested_amount: "£#{loan}",
@@ -134,7 +138,17 @@ describe "Zopa's Lending Market" do
       end
 
       context 'but has insufficient quotes with very low rates' do
-        it 'returns only the matching with the lowest rate'
+        it 'returns only the matching with the lowest rate' do
+          loan = 1400
+        
+          best_quote = Zopa::Market.new(
+            { 'Lender' => 'A', 'Rate' => 0.156, 'Available' => 1400 },
+            { 'Lender' => 'B', 'Rate' => 0.0156, 'Available' => 1400 },
+            { 'Lender' => 'C', 'Rate' => 0.0034, 'Available' => 400 }
+          ).best_quote loan
+        
+          expect(best_quote.rate).to eq '1.6%'
+        end
       end
     end
   end
