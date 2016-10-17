@@ -23,28 +23,37 @@ describe "Zopa's Lending Market" do
         end
 
         def best_quote_from(quote, loan, payment_period)
+          best_quote = Quote.new quote
           OpenStruct.new(
-            rate: rate_as_percentage(quote),
+            rate: best_quote.rate,
             requested_amount: "£#{loan}",
             monthly_repayment:
-              "£#{monthly_payment(quote, payment_period).round(2)}",
+              "£#{best_quote.monthly_payment(payment_period).round(2)}",
             total_repayment:
-              "£#{total_payment(quote, payment_period).round(2)}"
+              "£#{best_quote.total_payment(payment_period).round(2)}"
           )
         end
+      end
 
-        def rate_as_percentage quote
+      class Quote
+        attr_reader :quote
+        
+        def initialize quote
+          @quote = quote
+        end
+
+        def rate
           "#{(quote['Rate'] * 100).round(1)}%"
         end
 
-        def total_payment(quote, payment_period)
-          payment_period * monthly_payment(quote, payment_period)
+        def total_payment(payment_period)
+          payment_period * monthly_payment(payment_period)
         end
 
         # The formula for the monthly payment is assumed to the exact one
         # P = Li/[1 - (1 + i)^-n]
         # (see https://en.wikipedia.org/wiki/Compound_interest)
-        def monthly_payment(quote, payment_period)
+        def monthly_payment(payment_period)
           monthly_interest = quote['Rate']/12
 
           (quote['Available'] * monthly_interest)/
