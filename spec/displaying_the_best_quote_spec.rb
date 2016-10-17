@@ -2,17 +2,18 @@
 require 'ostruct'
 describe 'Displaying the best quote' do
   let(:markets) { double(:markets_csv) }
-  
-   def display_best_quote(amount, markets)
-     quote = markets.best_quote amount
+  let(:payment_period) { 36 }
 
-     return 'No quotes could be found at this time.' if quote.nil?
+  def display_best_quote(amount, markets, payment_period = 36)
+    quote = markets.best_quote(amount, payment_period)
+
+    return 'No quotes could be found at this time.' if quote.nil?
      
-     "Requested amount: #{quote.requested_amount}\n" +
-     "Rate: #{quote.rate}\n" +
-     "Monthly repayment: #{quote.monthly_repayment}\n" +
-       "Total repayment: #{quote.total_repayment}"
-    end
+    "Requested amount: #{quote.requested_amount}\n" +
+    "Rate: #{quote.rate}\n" +
+    "Monthly repayment: #{quote.monthly_repayment}\n" +
+      "Total repayment: #{quote.total_repayment}"
+  end
 
   describe 'when a best quote is found' do
     let(:loan) { 1000 }
@@ -28,7 +29,8 @@ describe 'Displaying the best quote' do
 
     before(:each) do
       allow(markets).to(
-        receive(:best_quote).with(loan).and_return a_best_quote)
+        receive(:best_quote).with(loan, payment_period).
+        and_return a_best_quote)
     end
 
     it 'displays the monthly repayment amount to 2 d.p.' do
@@ -70,7 +72,7 @@ describe 'Displaying the best quote' do
 
     before(:each) do
       allow(markets).to(
-        receive(:best_quote).with(loan).
+        receive(:best_quote).with(loan, payment_period).
         and_return a_best_quote
       )
     end
@@ -103,7 +105,8 @@ describe 'Displaying the best quote' do
   describe 'when the market has insufficient offers from lenders' do
     it 'states that no quotes could be found' do
       loan = 1500
-      allow(markets).to receive(:best_quote).with(loan).and_return nil
+      allow(markets).to(
+        receive(:best_quote).with(loan, payment_period).and_return nil)
       
       best_quote = display_best_quote(loan, markets)
 
