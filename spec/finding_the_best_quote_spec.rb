@@ -31,14 +31,14 @@ describe "Zopa's Lending Market" do
           )
         end
 
-        def total_payment(quote)
+        def total_payment quote
           payment_period * monthly_payment(quote)
         end
 
         # The formula for the monthly payment is assumed to the exact one
         # P = Li/[1 - (1 + i)^-n]
         # (see https://en.wikipedia.org/wiki/Compound_interest)
-        def monthly_payment(quote)
+        def monthly_payment quote
           monthly_interest = quote['Rate']/12
 
           (quote['Available'] * monthly_interest)/
