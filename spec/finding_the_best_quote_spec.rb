@@ -27,11 +27,12 @@ describe "Zopa's Lending Market" do
             rate: "#{(quote['Rate'] * 100).round(1)}%",
             requested_amount: "£#{loan}",
             monthly_repayment: "£#{monthly_payment(quote).round(2)}",
-            total_repayment: "£#{total_payment(quote).round(2)}"
+            total_repayment:
+              "£#{total_payment(quote, payment_period).round(2)}"
           )
         end
 
-        def total_payment quote
+        def total_payment(quote, payment_period)
           payment_period * monthly_payment(quote)
         end
 
