@@ -26,7 +26,8 @@ describe "Zopa's Lending Market" do
           OpenStruct.new(
             rate: rate_as_percentage(quote),
             requested_amount: "£#{loan}",
-            monthly_repayment: "£#{monthly_payment(quote).round(2)}",
+            monthly_repayment:
+              "£#{monthly_payment(quote, payment_period).round(2)}",
             total_repayment:
               "£#{total_payment(quote, payment_period).round(2)}"
           )
@@ -37,13 +38,13 @@ describe "Zopa's Lending Market" do
         end
 
         def total_payment(quote, payment_period)
-          payment_period * monthly_payment(quote)
+          payment_period * monthly_payment(quote, payment_period)
         end
 
         # The formula for the monthly payment is assumed to the exact one
         # P = Li/[1 - (1 + i)^-n]
         # (see https://en.wikipedia.org/wiki/Compound_interest)
-        def monthly_payment quote
+        def monthly_payment(quote, payment_period)
           monthly_interest = quote['Rate']/12
 
           (quote['Available'] * monthly_interest)/
