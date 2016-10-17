@@ -19,10 +19,10 @@ describe "Zopa's Lending Market" do
               select { |quote| quote['Available'] == loan }.
               min_by { |quote| quote['Rate'] }
 
-          best_quote_from(with_lowest_rate, loan)
+          best_quote_from(with_lowest_rate, loan, payment_period)
         end
 
-        def best_quote_from(quote, loan)
+        def best_quote_from(quote, loan, payment_period)
           OpenStruct.new(
             rate: rate_as_percentage(quote),
             requested_amount: "£#{loan}",
