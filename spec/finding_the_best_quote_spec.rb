@@ -1,17 +1,16 @@
 # coding: utf-8
 require 'ostruct'
 describe "Zopa's Lending Market" do
+  let(:payment_period) { 36 }
+  
   describe 'finding the best quote' do
     module Zopa
       class Market
-        attr_reader :payment_period
-        
         def initialize *quotes
-          @payment_period = 36
           @quotes = quotes
         end
 
-        def best_quote loan
+        def best_quote(loan, payment_period)
           return nil if @quotes.none? { |quote| quote['Available'] == loan }
 
           with_lowest_rate = 
@@ -19,11 +18,11 @@ describe "Zopa's Lending Market" do
               select { |quote| quote['Available'] == loan }.
               min_by { |quote| quote['Rate'] }
 
-          best_quote_from(with_lowest_rate, loan, payment_period)
+          best_quote_from(
+            Quote.new(with_lowest_rate), loan, payment_period)
         end
 
-        def best_quote_from(quote, loan, payment_period)
-          best_quote = Quote.new quote
+        def best_quote_from(best_quote, loan, payment_period)
           OpenStruct.new(
             rate: best_quote.rate,
             requested_amount: "£#{loan}",
@@ -71,25 +70,25 @@ describe "Zopa's Lending Market" do
       end
       
       it 'returns the loan rate offered to 1 d.p.' do
-        best_quote = market.best_quote loan
+        best_quote = market.best_quote(loan, payment_period)
 
         expect(best_quote.rate).to eq '7.0%'
       end
 
       it 'returns the loan requested' do
-        best_quote = market.best_quote loan
+        best_quote = market.best_quote(loan, payment_period)
 
         expect(best_quote.requested_amount).to eq '£1000'
       end
 
       it 'returns the total repayment to 2 d.p.' do
-        best_quote = market.best_quote loan
+        best_quote = market.best_quote(loan, payment_period)
 
         expect(best_quote.total_repayment).to eq '£1111.58'
       end
 
       it 'returns the monthly repayment to 2 d.p.' do
-        best_quote = market.best_quote loan             
+        best_quote = market.best_quote(loan, payment_period)             
 
         expect(best_quote.monthly_repayment).to eq '£30.88'
       end
@@ -104,25 +103,25 @@ describe "Zopa's Lending Market" do
       end
 
       it 'returns the loan rate offered to 1 d.p.' do
-        best_quote = market.best_quote loan
+        best_quote = market.best_quote(loan, payment_period)
 
         expect(best_quote.rate).to eq '4.5%'
       end
 
       it 'returns the loan requested' do
-        best_quote = market.best_quote loan
+        best_quote = market.best_quote(loan, payment_period)
         
         expect(best_quote.requested_amount).to eq '£1200'
       end
 
       it 'returns the monthly repayment to 2 d.p.' do
-        best_quote = market.best_quote loan
+        best_quote = market.best_quote(loan, payment_period)
         
         expect(best_quote.monthly_repayment).to eq '£35.71'
       end
 
       it 'returns the total repayment to 2 d.p.' do
-        best_quote = market.best_quote loan
+        best_quote = market.best_quote(loan, payment_period)
         
         expect(best_quote.total_repayment).to eq '£1285.65'
       end
@@ -135,7 +134,7 @@ describe "Zopa's Lending Market" do
           { 'Lender' => 'Len', 'Rate' => 0.0234, 'Available' => 600 }
         )
         
-        best_quote = market.best_quote loan
+        best_quote = market.best_quote(loan, payment_period)
         
         expect(best_quote).to be_nil
       end
@@ -150,7 +149,7 @@ describe "Zopa's Lending Market" do
             { 'Lender' => 'A', 'Rate' => 0.156, 'Available' => 1400 },
             { 'Lender' => 'B', 'Rate' => 0.0156, 'Available' => 1400 },
             { 'Lender' => 'C', 'Rate' => 0.0234, 'Available' => 1400 },
-          ).best_quote loan
+          ).best_quote(loan, payment_period)
         
           expect(best_quote.rate).to eq '1.6%'
         end
@@ -164,7 +163,7 @@ describe "Zopa's Lending Market" do
             { 'Lender' => 'A', 'Rate' => 0.156, 'Available' => 1400 },
             { 'Lender' => 'B', 'Rate' => 0.0156, 'Available' => 1400 },
             { 'Lender' => 'C', 'Rate' => 0.0034, 'Available' => 400 }
-          ).best_quote loan
+          ).best_quote(loan, payment_period)
         
           expect(best_quote.rate).to eq '1.6%'
         end
@@ -175,7 +174,7 @@ describe "Zopa's Lending Market" do
       it 'returns no quote' do
         loan = 1400
         
-        best_quote = Zopa::Market.new.best_quote loan
+        best_quote = Zopa::Market.new.best_quote(loan, payment_period)
         
         expect(best_quote).to be_nil
       end
