@@ -155,5 +155,15 @@ describe "Zopa's Lending Market" do
         end
       end
     end
+
+    context 'when the market has no quotes' do
+      it 'returns no quote' do
+        loan = 1400
+        
+        best_quote = Zopa::Market.new.best_quote loan
+        
+        expect(best_quote).to be_nil
+      end
+    end
   end
 end
