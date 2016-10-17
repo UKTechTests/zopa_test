@@ -22,7 +22,7 @@ describe "Zopa's Lending Market" do
           best_quote_from(with_lowest_rate, loan)
         end
 
-        def best_quote_from quote, loan
+        def best_quote_from(quote, loan)
           OpenStruct.new(
             rate: rate_as_percentage(quote),
             requested_amount: "£#{loan}",
