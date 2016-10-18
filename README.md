@@ -22,6 +22,14 @@ and £15000 inclusive. If the market does not have sufficient offers from
 lenders to satisfy the loan then the system should inform the borrower that it
 is not possible to provide a quote at that time.
 
+### Assumptions
+ To calculate the monthly repayments, the exact formula has been used (see [compound interest](
+   https://en.wikipedia.org/wiki/Compound_interest#Monthly_amortized_loan_or_mortgage_payments)).
+
+No edge cases have been considered in solving this problem.
+Edge cases have been identified and listed in the INBOX markdown
+and would be the topic of a conservation with the user.
+
 
 ## Running The Program
 - Ruby version required: 2.2.5
@@ -30,11 +38,3 @@ is not possible to provide a quote at that time.
 
 ## Running The Tests
  ```bundle exec rspec -cfd``` or ```bundle exec guard start```
-
-## Assumptions
- To calculate the monthly repayments, the exact formula has been used (see [compound interest](
-   https://en.wikipedia.org/wiki/Compound_interest#Monthly_amortized_loan_or_mortgage_payments)).
-
-No edge cases have been considered in solving this problem.
-Edge cases have been identified and listed in the INBOX markdown
-and would be the topic of a conservation with the user.
