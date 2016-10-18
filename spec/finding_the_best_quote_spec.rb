@@ -25,7 +25,7 @@ describe "Zopa's Lending Market" do
 
         def payment_plan(best_quote, payment_period)
           OpenStruct.new(
-            rate: best_quote.interest_rate,
+            rate: "#{best_quote.interest_rate.round(1)}%",
             requested_amount: "£#{best_quote.available}",
             monthly_repayment:
               "£#{best_quote.monthly_payment(payment_period).round(2)}",
@@ -48,7 +48,7 @@ describe "Zopa's Lending Market" do
         end
 
         def interest_rate
-          "#{(rate * 100).round(1)}%"
+          rate * 100
         end
 
         def total_payment(payment_period)
