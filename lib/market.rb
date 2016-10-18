@@ -17,19 +17,19 @@ module Zopa
         min_by { |offer| offer.rate }
 
 
-      payment_plan(with_lowest_rate, payment_period)
+      competitive_quote(with_lowest_rate, payment_period)
     end
 
     private
 
-    def payment_plan(best_quote, payment_period)
+    def competitive_quote(offer, payment_period)
       OpenStruct.new(
-        rate: "#{best_quote.interest_rate.round(1)}%",
-        requested_amount: "£#{best_quote.available}",
+        rate: "#{offer.interest_rate.round(1)}%",
+        requested_amount: "£#{offer.available}",
         monthly_repayment:
-          "£#{best_quote.monthly_payment(payment_period).round(2)}",
+          "£#{offer.monthly_payment(payment_period).round(2)}",
         total_repayment:
-          "£#{best_quote.total_payment(payment_period).round(2)}"
+          "£#{offer.total_payment(payment_period).round(2)}"
       )
     end
   end
