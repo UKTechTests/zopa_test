@@ -2,13 +2,13 @@
 require 'market'
 describe "Zopa's Lending Market" do
   let(:payment_period) { 36 }
-  
+
   describe 'finding the best quote' do
     context 'when an offer is insufficient' do
       it 'returns no quote' do
         loan = 1300
         market = Zopa::Market.new(
-          { 'Lender' => 'Len', 'Rate' => 0.0234, 'Available' => 600 }
+          [{ 'Lender' => 'Len', 'Rate' => 0.0234, 'Available' => 600 }]
         )
         
         best_quote = market.best_quote(loan, payment_period)
@@ -23,9 +23,11 @@ describe "Zopa's Lending Market" do
           loan = 1400
         
           best_quote = Zopa::Market.new(
-            { 'Lender' => 'A', 'Rate' => 0.156, 'Available' => 1400 },
-            { 'Lender' => 'B', 'Rate' => 0.0156, 'Available' => 1400 },
-            { 'Lender' => 'C', 'Rate' => 0.0234, 'Available' => 1400 },
+            [
+              { 'Lender' => 'A', 'Rate' => 0.156, 'Available' => 1400 },
+              { 'Lender' => 'B', 'Rate' => 0.0156, 'Available' => 1400 },
+              { 'Lender' => 'C', 'Rate' => 0.0234, 'Available' => 1400 }
+            ]
           ).best_quote(loan, payment_period)
         
           expect(best_quote.rate).to eq '1.6%'
@@ -37,9 +39,11 @@ describe "Zopa's Lending Market" do
           loan = 1400
         
           best_quote = Zopa::Market.new(
-            { 'Lender' => 'A', 'Rate' => 0.156, 'Available' => 1400 },
-            { 'Lender' => 'B', 'Rate' => 0.0156, 'Available' => 1400 },
-            { 'Lender' => 'C', 'Rate' => 0.0034, 'Available' => 400 }
+            [
+              { 'Lender' => 'A', 'Rate' => 0.156, 'Available' => 1400 },
+              { 'Lender' => 'B', 'Rate' => 0.0156, 'Available' => 1400 },
+              { 'Lender' => 'C', 'Rate' => 0.0034, 'Available' => 400 }
+            ]
           ).best_quote(loan, payment_period)
         
           expect(best_quote.rate).to eq '1.6%'
@@ -51,7 +55,7 @@ describe "Zopa's Lending Market" do
       it 'returns no quote' do
         loan = 1400
         
-        best_quote = Zopa::Market.new.best_quote(loan, payment_period)
+        best_quote = Zopa::Market.new([]).best_quote(loan, payment_period)
         
         expect(best_quote).to be_nil
       end

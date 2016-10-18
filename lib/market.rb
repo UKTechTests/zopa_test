@@ -5,7 +5,7 @@ module Zopa
   class Market
     attr_reader :offers
     
-    def initialize *offers
+    def initialize offers
       @offers = offers.map { |offer| Offer.new offer }
     end
 
