@@ -11,11 +11,11 @@ describe "Zopa's Lending Market" do
         end
 
         def best_quote(loan, payment_period)
-          return nil if @quotes.none? { |quote| quote.offering_to_loan? loan }
+          return nil if @quotes.none? { |quote| quote.offering? loan }
 
           with_lowest_rate =
             @quotes.
-            select { |quote| quote.offering_to_loan? loan }.
+            select { |quote| quote.offering? loan }.
             min_by { |quote| quote.rate }
 
           payment_plan(with_lowest_rate, payment_period)
@@ -45,6 +45,10 @@ describe "Zopa's Lending Market" do
 
         def offering_to_loan? amount
           available == amount
+        end
+
+        def offering? loan
+          available == loan
         end
 
         def interest_rate
