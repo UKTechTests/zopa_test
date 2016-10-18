@@ -17,7 +17,7 @@ module Zopa
       end
 
       def monthly_repayment
-        "£#{offer.monthly_payment(payment_period).round(2)}"
+        "£#{offer.monthly_repayment(payment_period).round(2)}"
       end
 
       def total_repayment
