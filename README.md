@@ -28,7 +28,7 @@ is not possible to provide a quote at that time.
 
 No edge cases have been considered in solving this problem.
 Edge cases have been identified and listed in the INBOX markdown
-and would be the topic of a conservation with the user.
+and would be the topic of a conversation with the user.
 
 
 ## Running The Program
