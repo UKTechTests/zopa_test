@@ -9,7 +9,7 @@ module Zopa
       end
 
       def requested_amount
-        "£#{offer.available}"
+        "£#{offer.available.to_i}"
       end
 
       def rate

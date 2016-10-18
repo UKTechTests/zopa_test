@@ -7,7 +7,7 @@ describe 'Quotes' do
   
   context 'Given an offer and payment period' do
     let(:offer) do
-      Zopa::Market::Offer.new('Rate' => 0.07, 'Available' => 1000) 
+      Zopa::Market::Offer.new('Rate' => 0.07, 'Available' => 1000.0) 
     end
     
     let(:quote) { Zopa::Market::Quote.new(offer, payment_period) }
@@ -31,7 +31,7 @@ describe 'Quotes' do
 
   context 'Given a different offer' do
     let(:offer) do
-      Zopa::Market::Offer.new({ 'Rate' => 0.0453, 'Available' => 1200 })
+      Zopa::Market::Offer.new({ 'Rate' => 0.0453, 'Available' => 1200.0 })
     end
 
     let(:quote) { Zopa::Market::Quote.new(offer, payment_period) }
