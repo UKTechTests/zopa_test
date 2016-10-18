@@ -2,17 +2,20 @@
 require 'ostruct'
 module Zopa
   class Market
-    def initialize *quotes
-      @quotes = quotes.map { |quote| Quote.new quote }
+    attr_reader :offers
+    
+    def initialize *offers
+      @offers = offers.map { |offer| Offer.new offer }
     end
 
     def best_quote(loan, payment_period)
-      return nil if @quotes.none? { |quote| quote.offering? loan }
+      return nil if offers.none? { |offer| offer.offering? loan }
 
       with_lowest_rate =
-        @quotes.
-        select { |quote| quote.offering? loan }.
-        min_by { |quote| quote.rate }
+        offers.
+        select { |offer| offer.offering? loan }.
+        min_by { |offer| offer.rate }
+
 
       payment_plan(with_lowest_rate, payment_period)
     end
@@ -30,13 +33,13 @@ module Zopa
       )
     end
   end
-  
-  class Quote
+
+  class Offer
     attr_reader :available, :rate
         
-    def initialize quote
-      @rate = quote['Rate']
-      @available = quote['Available']
+    def initialize offer
+      @rate = offer['Rate']
+      @available = offer['Available']
     end
 
     def offering? loan
