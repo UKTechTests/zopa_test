@@ -19,5 +19,9 @@ describe 'An offer' do
     expect(offer.monthly_payment(36)).to be_within(0.01).of 437.54
   end
 
-  it 'returns the total repayment'
+  it 'returns the total repayment' do
+    offer = Zopa::Market::Offer.new('Available' => 15000.0, 'Rate' => 0.032)
+    
+    expect(offer.total_payment(36)).to be_within(0.01).of 15751.49
+  end
 end
