@@ -4,15 +4,24 @@ describe 'Displaying the best quote' do
   let(:markets) { double(:markets_csv) }
   let(:payment_period) { 36 }
 
-  def display_best_quote(amount, markets, payment_period = 36)
-    quote = markets.best_quote(amount, payment_period)
+  module Zopa
+    class Loans
+      attr_reader :market
+      def initialize(market)
+        @market = market
+      end
 
-    return 'No quotes could be found at this time.' if quote.nil?
+      def display_best_quote(amount, payment_period = 36)
+        quote = market.best_quote(amount, payment_period)
+
+        return 'No quotes could be found at this time.' if quote.nil?
      
-    "Requested amount: #{quote.requested_amount}\n" +
-    "Rate: #{quote.rate}\n" +
-    "Monthly repayment: #{quote.monthly_repayment}\n" +
-      "Total repayment: #{quote.total_repayment}"
+        "Requested amount: #{quote.requested_amount}\n" +
+          "Rate: #{quote.rate}\n" +
+          "Monthly repayment: #{quote.monthly_repayment}\n" +
+          "Total repayment: #{quote.total_repayment}"
+      end
+    end
   end
 
   describe 'when a best quote is found' do
@@ -34,26 +43,30 @@ describe 'Displaying the best quote' do
     end
 
     it 'displays the monthly repayment amount' do
-      best_quote = display_best_quote(loan, markets)
+      best_quote =
+        Zopa::Loans.new(markets).display_best_quote(loan, payment_period)
       
       expect(best_quote).to include 'Monthly repayment: £30.78'
     end
 
     it 'displays the total repayment amount' do
-      best_quote = display_best_quote(loan, markets)
+      best_quote =
+        Zopa::Loans.new(markets).display_best_quote(loan, payment_period)
       
       expect(best_quote).to include 'Total repayment: £1108.10'
     end
 
     it 'displays the loan rate' do
-      best_quote = display_best_quote(loan, markets)
+      best_quote =
+        Zopa::Loans.new(markets).display_best_quote(loan, payment_period)
       
       expect(best_quote).to include 'Rate: 7.0%'
     end
 
     it 'displays the loan requested' do
-      best_quote = display_best_quote(loan, markets)
-      
+      best_quote =
+        Zopa::Loans.new(markets).display_best_quote(loan, payment_period)
+
       expect(best_quote).to include 'Requested amount: £1000'
     end
   end
@@ -78,25 +91,29 @@ describe 'Displaying the best quote' do
     end
     
     it 'displays the monthly repayment amount' do
-      best_quote = display_best_quote(loan, markets)
+      best_quote =
+        Zopa::Loans.new(markets).display_best_quote(loan, payment_period)
       
       expect(best_quote).to include 'Monthly repayment: £33.38'
     end
 
     it 'displays the total replayment amount' do
-      best_quote = display_best_quote(loan, markets)
+      best_quote =
+        Zopa::Loans.new(markets).display_best_quote(loan, payment_period)
       
       expect(best_quote).to include 'Total repayment: £1201.86'
     end
 
     it 'displays the loan rate' do
-      best_quote = display_best_quote(loan, markets)
+      best_quote =
+        Zopa::Loans.new(markets).display_best_quote(loan, payment_period)
       
       expect(best_quote).to include 'Rate: 6.0%'
     end
 
     it 'displays the loan requested' do
-      best_quote = display_best_quote(loan, markets)
+      best_quote =
+        Zopa::Loans.new(markets).display_best_quote(loan, payment_period)
       
       expect(best_quote).to include 'Requested amount: £1100'
     end
@@ -108,7 +125,8 @@ describe 'Displaying the best quote' do
       allow(markets).to(
         receive(:best_quote).with(loan, payment_period).and_return nil)
       
-      best_quote = display_best_quote(loan, markets)
+      best_quote =
+        Zopa::Loans.new(markets).display_best_quote(loan, payment_period)
 
       expect(best_quote).to eq 'No quotes could be found at this time.'
     end
