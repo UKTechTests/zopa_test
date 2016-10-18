@@ -16,7 +16,7 @@ describe "Zopa's Lending Market" do
           with_lowest_rate =
             @quotes.
             select { |quote| quote.offering_to_loan? loan }.
-            min_by { |quote| quote['Rate'] }
+            min_by { |quote| quote.rate }
 
           payment_plan(with_lowest_rate, payment_period)
         end
@@ -36,7 +36,7 @@ describe "Zopa's Lending Market" do
       end
 
       class Quote
-        attr_reader :quote, :available
+        attr_reader :quote, :available, :rate
         
         def initialize quote
           @quote = quote
@@ -53,7 +53,7 @@ describe "Zopa's Lending Market" do
         end
 
         def interest_rate
-          "#{(@rate * 100).round(1)}%"
+          "#{(rate * 100).round(1)}%"
         end
 
         def total_payment(payment_period)
@@ -64,7 +64,7 @@ describe "Zopa's Lending Market" do
         # P = Li/[1 - (1 + i)^-n]
         # (see https://en.wikipedia.org/wiki/Compound_interest)
         def monthly_payment(payment_period)
-          monthly_interest = @rate / 12
+          monthly_interest = rate / 12
 
           (available * monthly_interest)/
             (1 - (1 + monthly_interest)**(-payment_period))
