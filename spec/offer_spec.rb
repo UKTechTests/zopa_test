@@ -25,3 +25,11 @@ describe 'An offer' do
     expect(offer.total_payment(36)).to be_within(0.01).of 15751.49
   end
 end
+
+describe 'Any offer' do
+  it 'returns the interest rate as percentage' do
+    offer = Zopa::Market::Offer.new('Available' => 1000.0, 'Rate' => 0.063)
+    
+    expect(offer.interest_rate).to be_within(0.001).of 6.3
+  end
+end
