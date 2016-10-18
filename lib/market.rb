@@ -16,21 +16,33 @@ module Zopa
         select { |offer| offer.offering? loan }.
         min_by { |offer| offer.rate }
 
-
-      competitive_quote(with_lowest_rate, payment_period)
+      Quote.new(with_lowest_rate, payment_period)
     end
 
     private
 
-    def competitive_quote(offer, payment_period)
-      OpenStruct.new(
-        rate: "#{offer.interest_rate.round(1)}%",
-        requested_amount: "£#{offer.available}",
-        monthly_repayment:
-          "£#{offer.monthly_payment(payment_period).round(2)}",
-        total_repayment:
-          "£#{offer.total_payment(payment_period).round(2)}"
-      )
+    class Quote
+      attr_reader :offer, :payment_period
+      def initialize(offer, payment_period)
+        @offer = offer
+        @payment_period = payment_period
+      end
+
+      def requested_amount
+        "£#{offer.available}"
+      end
+
+      def rate
+        "#{offer.interest_rate.round(1)}%"
+      end
+
+      def monthly_repayment
+        "£#{offer.monthly_payment(payment_period).round(2)}"
+      end
+
+      def total_repayment
+        "£#{offer.total_payment(payment_period).round(2)}"
+      end
     end
     
     class Offer
