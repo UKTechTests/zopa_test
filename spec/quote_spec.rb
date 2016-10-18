@@ -1,5 +1,6 @@
 # coding: utf-8
 require 'market'
+require 'quote'
 describe 'Quotes' do
   let(:payment_period) { 36 }
   
