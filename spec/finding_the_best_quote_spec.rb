@@ -1,4 +1,5 @@
 # coding: utf-8
+require 'spec_helper'
 require 'market'
 describe "Zopa's Lending Market" do
   let(:payment_period) { 36 }

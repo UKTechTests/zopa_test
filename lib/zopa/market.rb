@@ -1,6 +1,6 @@
 # coding: utf-8
-require 'quote'
-require 'offer'
+require_relative './quote'
+require_relative './offer'
 module Zopa
   class Market
     attr_reader :offers
