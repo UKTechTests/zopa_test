@@ -21,6 +21,8 @@ describe "Zopa's Lending Market" do
           payment_plan(with_lowest_rate, payment_period)
         end
 
+        private
+
         def payment_plan(best_quote, payment_period)
           OpenStruct.new(
             rate: best_quote.rate,
