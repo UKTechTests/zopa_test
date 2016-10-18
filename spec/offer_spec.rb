@@ -38,4 +38,8 @@ describe 'Any offer' do
   it 'returns the monthly repayment' do
     expect(offer.monthly_payment(36)).to be_within(0.01).of 30.56
   end
+
+  it 'returns the total repayment' do
+    expect(offer.total_payment(36)).to be_within(0.01).of 1100.09
+  end
 end
