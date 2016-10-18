@@ -4,7 +4,7 @@ describe "Zopa's Lending Market" do
   let(:payment_period) { 36 }
   
   describe 'finding the best quote' do
-    context 'when the one quote that is offered is insufficient' do
+    context 'when an offer is insufficient' do
       it 'returns no quote' do
         loan = 1300
         market = Zopa::Market.new(
@@ -17,9 +17,9 @@ describe "Zopa's Lending Market" do
       end
     end
 
-    context 'when the market has multiple quotes' do
+    context 'when the market has multiple offers' do
       context 'all of which match the loan requested' do
-        it 'returns the quote with the lowest rate' do
+        it 'quotes the offer with the lowest rate' do
           loan = 1400
         
           best_quote = Zopa::Market.new(
@@ -32,8 +32,8 @@ describe "Zopa's Lending Market" do
         end
       end
 
-      context 'but has insufficient quotes with very low rates' do
-        it 'returns only the matching with the lowest rate' do
+      context 'but has insufficient offers with very low rates' do
+        it 'quotes only the matching offer with the lowest rate' do
           loan = 1400
         
           best_quote = Zopa::Market.new(
@@ -47,7 +47,7 @@ describe "Zopa's Lending Market" do
       end
     end
 
-    context 'when the market has no quotes' do
+    context 'when the market has no offers' do
       it 'returns no quote' do
         loan = 1400
         
