@@ -7,19 +7,18 @@ describe "Zopa's Lending Market" do
     module Zopa
       class Market
         def initialize *quotes
-          @quotes = quotes
+          @quotes = quotes.map { |quote| Quote.new quote }
         end
 
         def best_quote(loan, payment_period)
           return nil if @quotes.none? { |quote| quote['Available'] == loan }
 
-          with_lowest_rate = 
-            @quotes.
-              select { |quote| quote['Available'] == loan }.
-              min_by { |quote| quote['Rate'] }
+          with_lowest_rate =
+            @quotes.                 
+            select { |quote| quote['Available'] == loan }.
+            min_by { |quote| quote['Rate'] }
 
-          best_quote_from(
-            Quote.new(with_lowest_rate), loan, payment_period)
+          best_quote_from(with_lowest_rate, loan, payment_period)
         end
 
         def best_quote_from(best_quote, loan, payment_period)
@@ -39,6 +38,10 @@ describe "Zopa's Lending Market" do
         
         def initialize quote
           @quote = quote
+        end
+
+        def [](key)
+          quote[key]
         end
 
         def rate
