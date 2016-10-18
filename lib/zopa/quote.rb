@@ -21,7 +21,7 @@ module Zopa
       end
 
       def total_repayment
-        "£#{offer.total_payment(payment_period).round(2)}"
+        "£#{offer.total_repayment(payment_period).round(2)}"
       end
     end
   end

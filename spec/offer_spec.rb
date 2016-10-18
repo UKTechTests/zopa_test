@@ -18,7 +18,7 @@ describe 'An offer' do
   end
 
   it 'returns the total repayment' do
-    expect(offer.total_payment(36)).to be_within(0.01).of 15751.49
+    expect(offer.total_repayment(36)).to be_within(0.01).of 15751.49
   end
 end
 
@@ -40,6 +40,6 @@ describe 'Any offer' do
   end
 
   it 'returns the total repayment' do
-    expect(offer.total_payment(36)).to be_within(0.01).of 1100.09
+    expect(offer.total_repayment(36)).to be_within(0.01).of 1100.09
   end
 end

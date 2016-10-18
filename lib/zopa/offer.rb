@@ -16,7 +16,7 @@ module Zopa
         rate * 100
       end
 
-      def total_payment(payment_period)
+      def total_repayment(payment_period)
         payment_period * monthly_payment(payment_period)
       end
 
