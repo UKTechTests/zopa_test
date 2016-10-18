@@ -31,7 +31,7 @@ is not possible to provide a quote at that time.
 ## Running The Tests
  ```bundle exec rspec -cfd``` or ```bundle exec guard start```
 
- ## Assumptions
+## Assumptions
  To calculate the monthly repayments, the exact formula has been used (see [compound interest](
    https://en.wikipedia.org/wiki/Compound_interest#Monthly_amortized_loan_or_mortgage_payments)).
 
