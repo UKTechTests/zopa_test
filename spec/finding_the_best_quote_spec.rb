@@ -43,10 +43,6 @@ describe "Zopa's Lending Market" do
           @available = quote['Available']
         end
 
-        def offering_to_loan? amount
-          available == amount
-        end
-
         def offering? loan
           available == loan
         end
