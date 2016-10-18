@@ -36,16 +36,11 @@ describe "Zopa's Lending Market" do
       end
 
       class Quote
-        attr_reader :quote, :available, :rate
+        attr_reader :available, :rate
         
         def initialize quote
-          @quote = quote
           @rate = quote['Rate']
           @available = quote['Available']
-        end
-
-        def [](key)
-          quote[key]
         end
 
         def offering_to_loan? amount
