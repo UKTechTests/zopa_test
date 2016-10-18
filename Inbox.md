@@ -6,7 +6,6 @@ with the user.
 ### Command Line Args
   - Markets CSV doc missing;
   - amount to borrow is outside of the £1,000-£15,000 range;
-  - negative amounts;
   - amount not specified
 
 ### Markets CSV doc
