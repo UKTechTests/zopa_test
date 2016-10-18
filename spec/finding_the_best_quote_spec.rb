@@ -11,11 +11,11 @@ describe "Zopa's Lending Market" do
         end
 
         def best_quote(loan, payment_period)
-          return nil if @quotes.none? { |quote| quote['Available'] == loan }
+          return nil if @quotes.none? { |quote| quote.offering_to_loan? loan }
 
           with_lowest_rate =
             @quotes.
-            select { |quote| quote['Available'] == loan }.
+            select { |quote| quote.offering_to_loan? loan }.
             min_by { |quote| quote['Rate'] }
 
           payment_plan(with_lowest_rate, payment_period)
@@ -26,7 +26,7 @@ describe "Zopa's Lending Market" do
         def payment_plan(best_quote, payment_period)
           OpenStruct.new(
             rate: best_quote.rate,
-            requested_amount: "£#{best_quote['Available']}",
+            requested_amount: "£#{best_quote.available}",
             monthly_repayment:
               "£#{best_quote.monthly_payment(payment_period).round(2)}",
             total_repayment:
@@ -44,6 +44,14 @@ describe "Zopa's Lending Market" do
 
         def [](key)
           quote[key]
+        end
+
+        def available
+          quote['Available']
+        end
+
+        def offering_to_loan? amount
+          quote['Available'] == amount
         end
 
         def rate
