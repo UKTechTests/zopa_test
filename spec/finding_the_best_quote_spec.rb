@@ -36,26 +36,24 @@ describe "Zopa's Lending Market" do
       end
 
       class Quote
-        attr_reader :quote
+        attr_reader :quote, :available
         
         def initialize quote
           @quote = quote
+          @rate = quote['Rate']
+          @available = quote['Available']
         end
 
         def [](key)
           quote[key]
         end
 
-        def available
-          quote['Available']
-        end
-
         def offering_to_loan? amount
-          quote['Available'] == amount
+          available == amount
         end
 
         def rate
-          "#{(quote['Rate'] * 100).round(1)}%"
+          "#{(@rate * 100).round(1)}%"
         end
 
         def total_payment(payment_period)
@@ -66,9 +64,9 @@ describe "Zopa's Lending Market" do
         # P = Li/[1 - (1 + i)^-n]
         # (see https://en.wikipedia.org/wiki/Compound_interest)
         def monthly_payment(payment_period)
-          monthly_interest = quote['Rate']/12
+          monthly_interest = @rate / 12
 
-          (quote['Available'] * monthly_interest)/
+          (available * monthly_interest)/
             (1 - (1 + monthly_interest)**(-payment_period))
         end
       end
