@@ -28,4 +28,11 @@ describe 'Any offer' do
     
     expect(offer.interest_rate).to be_within(0.001).of 6.3
   end
+
+  it 'returns the amount that may be borrowed' do
+    offer = Zopa::Market::Offer.new('Available' => 1000.0, 'Rate' => 0.063)
+    
+    expect(offer.available).to be_within(0.001).of 1000
+  end
+
 end
