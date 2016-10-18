@@ -1,5 +1,4 @@
 # coding: utf-8
-require 'ostruct'
 require 'quote'
 require 'offer'
 module Zopa
