@@ -103,7 +103,7 @@ describe 'Displaying the best quote' do
         receive(:best_quote).with(loan, payment_period).and_return nil)
       
       best_quote =
-        Zopa::Loans.new(markets).display_best_quote(loan, payment_period)
+        @loans.display_best_quote(loan, payment_period)
 
       expect(best_quote).to eq 'No quotes could be found at this time.'
     end
