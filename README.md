@@ -36,5 +36,13 @@ and would be the topic of a conversation with the user.
 
 ```bundle exec ruby quote.rb path/to/market.csv amount```
 
+The program produces output in the form:
+```
+Requested amount: £XXXX
+Rate: X.X%
+Monthly repayment: £XXXX.XX
+Total repayment: £XXXX.XX
+```
+
 ## Running The Tests
  ```bundle exec rspec -cfd``` or ```bundle exec guard start```
