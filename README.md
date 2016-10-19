@@ -33,6 +33,8 @@ and would be the topic of a conversation with the user.
 
 ## Running The Program
 - Ruby version required: 2.2.5
+- Install bundler ```gem install bundler```
+- Run ```bundle install```
 
 ```bundle exec ruby quote.rb path/to/market.csv amount```
 
@@ -44,5 +46,5 @@ Monthly repayment: £XXXX.XX
 Total repayment: £XXXX.XX
 ```
 
-## Running The Tests
+### Running The Tests
  ```bundle exec rspec -cfd``` or ```bundle exec guard start```
