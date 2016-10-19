@@ -8,4 +8,5 @@ end
 group :test do
   gem 'rspec'
   gem 'guard-rspec'
+  gem 'simplecov', require: false
 end
